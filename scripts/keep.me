@@ -1,0 +1,33 @@
+  Aqui está um código em Python que pode ser usado para processar e analisar os dados de vendas do arquivo CSV, gerando insights como a idade média dos compradores e resumo de vendas por país:
+
+```python
+import pandas as pd
+
+# Carregar o arquivo CSV
+arquivo = "Meganium_Sales_Data_-_AliExpress (1).csv"
+df = pd.read_csv(arquivo)
+
+# Converter data de nascimento para calcular idade
+df['buyer_birth_date'] = pd.to_datetime(df['buyer_birth_date'])
+df['idade_comprador'] = (pd.to_datetime("today").year - df['buyer_birth_date'].dt.year)
+
+# Resumo de vendas por país
+resumo_vendas = df.groupby(['delivery_country', 'SKU']).agg({
+    'quantity': 'sum',
+    'total_price': 'sum'
+}).reset_index()
+
+# Idade média dos compradores por país
+idade_media = df.groupby('delivery_country')['idade_comprador'].mean().reset_index()
+
+# Exibir os resultados
+print("Resumo de Vendas por País:")
+print(resumo_vendas)
+
+print("\nIdade Média dos Compradores por País:")
+print(idade_media)
+```
+
+Este código usa **Pandas** para manipular os dados, calcular a idade dos compradores e gerar um resumo das vendas. Se quiser adicionar mais análises ou otimizar algum ponto, me avise! 😊
+
+
